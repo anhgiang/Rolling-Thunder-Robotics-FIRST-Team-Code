@@ -19,16 +19,22 @@ public class RobotMap {
     // public static final int rangefinderPort = 1;
     // public static final int rangefinderModule = 1;
    
-    //Victors slots #...drive
-    public static final int frontrightWheelDrive=2;
-    public static final int frontleftWheelDrive=1;
-    public static final int backleftWheelDrive=4;
-    public static final int backrightWheelDrive=3;
+    //Victors slots #...turn
+    public static final int frontrightWheelTurn=1;
+    public static final int frontleftWheelTurn=2;
+    public static final int backleftWheelTurn=3;
+    public static final int backrightWheelTurn=4;
     
     //Canjaguar slots #...drive
-    public static final int frontrightWheelTurn=3;
-    public static final int frontleftWheelTurn=2;
-    public static final int backleftWheelTurn=5;
-    public static final int backrightWheelTurn=4;
+    public static final int frontrightWheelDrive=3;
+    public static final int frontleftWheelDrive=2;
+    public static final int backleftWheelDrive=5;
+    public static final int backrightWheelDrive=4;
+    
+    //Encoder analog channels #...
+    public static final int frPot=1;
+    public static final int flPot=2;
+    public static final int blPot=3;
+    public static final int brPot=4;
     public static final Joystick stick1 = new Joystick(1);//joy stick for drivetrain
 }

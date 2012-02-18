@@ -114,10 +114,7 @@ public class DriverCommand extends CommandBase {
         }
         adjustSpeedAndAngle();
 
-        //saving angles...
-        for (int i = 0; i <= 3; i++) {
-            driveSubsystem.lastAngle[i] = driveSubsystem.lastAngle[i] + driveSubsystem.angle[i];
-        }
+      
         //set motors speed for each wheel...
         driveSubsystem.setWheel();
 
@@ -129,7 +126,7 @@ public class DriverCommand extends CommandBase {
         for (int i = 0; i <= 3; i++) {
             driveSubsystem.magnitude[i] = driveSubsystem.magnitude[i] * MathUtils.pow(-1, (int) (driveSubsystem.angle[i] / 180.0));
             driveSubsystem.angle[i] = (driveSubsystem.angle[i] % 180.0);
-            if (Math.abs(driveSubsystem.angle[i] + driveSubsystem.lastAngle[i]) > 180) {
+            if (Math.abs(driveSubsystem.angle[i] + driveSubsystem.getLastAngle(i)) > 180) {
                 driveSubsystem.angle[i] = driveSubsystem.angle[i] - 180.0;
                 driveSubsystem.magnitude[i] *= -1;
             }
@@ -137,10 +134,5 @@ public class DriverCommand extends CommandBase {
 
     }
 
-    protected void resetAngle() {
-        for (int i = 0; i <= 3; i++) {
-            driveSubsystem.lastAngle[i] = 0.0;
-        }
-
-    }
+  
 }

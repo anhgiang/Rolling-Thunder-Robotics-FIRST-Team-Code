@@ -3,6 +3,7 @@ package edu.wpi.first.wpilibj.templates.commands;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.templates.OI;
 import edu.wpi.first.wpilibj.templates.subsystems.DriveSystem;
@@ -43,6 +44,7 @@ public abstract class CommandBase extends Command {
             public void run() {
                 while (true) {
                     Timer.delay(.2);
+                    //SmartDashboard.putData(Scheduler.getInstance());
                     SmartDashboard.putData(massSubsystem);
                     SmartDashboard.putData(leverSubsystem);
                     SmartDashboard.putData(gyroSubsystem);

@@ -17,39 +17,46 @@ import edu.wpi.first.wpilibj.Jaguar;
  *
  * @author Giang
  */
-public class Wheel /*implements SmartDashboardData*/ {
+public class Wheel implements SmartDashboardData {
 
     private CANJaguar driveJaguar;
     //public Jaguar driveJaguar;
     private Victor turnVictor;
     private boolean alive;
     public NetworkTable table;
-
+public static int numberOfretry=10;
     public Wheel(int turnchannel, int drivechannel) {
-        for(int a=0;a<5;a++)
+        for(int a=0;a<numberOfretry;a++)
         {try {
             driveJaguar = new CANJaguar(drivechannel, CANJaguar.ControlMode.kPercentVbus);
-            //driveJaguar.enableControl();
-       driveJaguar.setExpiration(2500000.0);
+            driveJaguar.enableControl();
+            break;
+       //driveJaguar.setExpiration(2500000.0);
             
         } catch (CANTimeoutException ex) {
-            int x=2;
-        }}
+            if(a==numberOfretry)
+                driveJaguar=null;
+        }
+        }
+        
             turnVictor = new Victor(turnchannel);
-
         
     }
 
     public void setWheel(double turnRate, double driveRate) {
-        turnVictor.Feed();
-        try {
-            driveJaguar.setX(driveRate);
-        } catch (CANTimeoutException ex) {
-            int a=3;
-        }
+        /*turnVictor.Feed();
         alive=turnVictor.isAlive();
-        turnVictor.set(turnRate);
+        turnVictor.set(.25);
         double foo=turnVictor.get();
+        for(int a=0;a<numberOfretry;a++)
+        { try {
+            if(driveJaguar!=null){
+                driveJaguar.setX(driveRate);
+                break;}
+        } catch (CANTimeoutException ex) {
+            int b=3;
+        }}*/
+        
 
     }
 
