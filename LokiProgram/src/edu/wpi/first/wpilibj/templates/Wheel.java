@@ -8,32 +8,91 @@ package edu.wpi.first.wpilibj.templates;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboardData;
+import edu.wpi.first.wpilibj.Jaguar;
 
 
 /**
  *
  * @author Giang
  */
-public class Wheel {
+public class Wheel /*implements SmartDashboardData*/ {
 
-    private CANJaguar turnJaguar;
+    private CANJaguar driveJaguar;
     //public Jaguar driveJaguar;
-    private Victor driveVictor;
+    private Victor turnVictor;
+    private boolean alive;
+    public NetworkTable table;
 
-    public Wheel(int turnchannel, int drivechannel){
-        try {
-            turnJaguar = new CANJaguar(turnchannel,CANJaguar.ControlMode.kPercentVbus);
-            turnJaguar.enableControl();
-            driveVictor = new Victor(drivechannel);
+    public Wheel(int turnchannel, int drivechannel) {
+        for(int a=0;a<5;a++)
+        {try {
+            driveJaguar = new CANJaguar(drivechannel, CANJaguar.ControlMode.kPercentVbus);
+            //driveJaguar.enableControl();
+       driveJaguar.setExpiration(2500000.0);
+            
         } catch (CANTimeoutException ex) {
-        }
-    }
-    public void setWheel(double turnRate, double driveRate){
-        try {
-            turnJaguar.setX(turnRate);
-        } catch (CANTimeoutException ex) {
-        }
-        driveVictor.set(driveRate);
+            int x=2;
+        }}
+            turnVictor = new Victor(turnchannel);
+
         
+    }
+
+    public void setWheel(double turnRate, double driveRate) {
+        turnVictor.Feed();
+        try {
+            driveJaguar.setX(driveRate);
+        } catch (CANTimeoutException ex) {
+            int a=3;
+        }
+        alive=turnVictor.isAlive();
+        turnVictor.set(turnRate);
+        double foo=turnVictor.get();
+
+    }
+
+    public NetworkTable getTable() {
+        if (table == null) {
+            table = new NetworkTable();
+        }
+       /* try {
+            table.putInt("Jaguar Faults", driveJaguar.getFaults());
+        } catch (Exception exception) {
+            table.putString("FaultException", exception.toString());
+        }*/
+        /*try {
+            table.putBoolean("Jaguar Forward Limit", driveJaguar.getForwardLimitOK());
+        } catch (Exception exception) {
+            table.putString("ForwardException", exception.toString());
+        }*/
+        
+       /* try {
+            table.putBoolean("Jaguar Reverse Limit", driveJaguar.getReverseLimitOK());
+        } catch (Exception exception) {
+            table.putString("ReverseException", exception.toString());
+        }*/
+        try {
+            table.putDouble("Jaguar Speed", driveJaguar.getSpeed());
+        } catch (Exception exception) {
+            table.putString("SpeedException", exception.toString());
+        }
+        // Victor Values
+        try {
+            table.putDouble("Victor Speed", turnVictor.getSpeed());
+        } catch (Exception exception) {
+            table.putString("VSpeed Exception", exception.toString());
+        }
+        try {
+            table.putInt("Victor Channel", turnVictor.getChannel());
+        } catch (Exception exception) {
+            table.putString("VChannel Exception", exception.toString());
+        }
+        return table;
+    }
+
+    public String getType() {
+        return "Wheel";
     }
 }

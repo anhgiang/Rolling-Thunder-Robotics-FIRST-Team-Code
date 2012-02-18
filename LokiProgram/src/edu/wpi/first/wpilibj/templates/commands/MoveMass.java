@@ -1,12 +1,20 @@
+ /*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package edu.wpi.first.wpilibj.templates.commands;
+import com.sun.squawk.util.MathUtils;
 
 /**
  *
- * @author bradmiller
+ * @author Giang
  */
-public class MainAutoCommand extends CommandBase {
-
-    public MainAutoCommand() {
+public class MoveMass extends CommandBase {
+    
+    public MoveMass() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+      requires(massSubsystem);
     }
 
     // Called just before this Command runs the first time
@@ -15,8 +23,14 @@ public class MainAutoCommand extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+     
+     // massSubsystem.moveMass(getMassSpeed(massSubsystem.accelerometer.getAcceleration()));
     }
 
+    protected double getMassSpeed(double acc){
+       return MathUtils.asin(acc/9.8)*(180/Math.PI)*-.25;
+        
+    }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return false;

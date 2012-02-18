@@ -1,12 +1,18 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package edu.wpi.first.wpilibj.templates.commands;
 
 /**
  *
- * @author bradmiller
+ * @author Robert Truong
  */
-public class MainAutoCommand extends CommandBase {
-
-    public MainAutoCommand() {
+public class AutoMoveMass extends CommandBase {
+    
+    public AutoMoveMass() {
+        requires(gyroSubsystem);
+        requires(massSubsystem);
     }
 
     // Called just before this Command runs the first time
