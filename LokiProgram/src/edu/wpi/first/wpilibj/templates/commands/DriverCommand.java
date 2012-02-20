@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package edu.wpi.first.wpilibj.templates.commands;
- 
+
 //import edu.wpi.first.wpilibj.AnalogChannel;
 //import edu.wpi.first.wpilibj.AnalogModule;
 //import edu.wpi.first.wpilibj.CANJaguar;
@@ -74,22 +74,21 @@ public class DriverCommand extends CommandBase {
 
     protected void swerveWithRotation(double STR, double FWD, double RCW) {
         //convert to field-centric...
-        double temp = FWD * Math.cos(gyroSubsystem.getAngle()) + STR * Math.sin(gyroSubsystem.getAngle());
-        STR = -FWD * Math.sin(gyroSubsystem.getAngle()) + STR * Math.cos(gyroSubsystem.getAngle());
+        double temp = FWD * Math.cos(gyroSubsystem.getDriveAngle()) + STR * Math.sin(gyroSubsystem.getDriveAngle());
+        STR = -FWD * Math.sin(gyroSubsystem.getDriveAngle()) + STR * Math.cos(gyroSubsystem.getDriveAngle());
         FWD = temp;
-        gyroSubsystem.updateAngle(RCW);
         //Vector components...
         double A = STR - RCW * (L / R);
         double B = STR + RCW * (L / R);
         double C = FWD - RCW * (W / R);
         double D = FWD + RCW * (W / R);
 
-        //temp speed for each wheel
+        //temp speed for each wheel from -1 to 1
         driveSubsystem.magnitude[0] = Math.sqrt(MathUtils.pow(B, 2.0) + MathUtils.pow(C, 2.0));
         driveSubsystem.magnitude[1] = Math.sqrt(MathUtils.pow(B, 2.0) + MathUtils.pow(D, 2.0));
         driveSubsystem.magnitude[2] = Math.sqrt(MathUtils.pow(A, 2.0) + MathUtils.pow(D, 2.0));
         driveSubsystem.magnitude[3] = Math.sqrt(MathUtils.pow(A, 2.0) + MathUtils.pow(C, 2.0));
-        // temp angle for each wheel
+        // temp angle for each wheel from -180 to 180 clockwise
         driveSubsystem.angle[0] = MathUtils.atan2(B, C) * 180 / Math.PI;
         driveSubsystem.angle[1] = MathUtils.atan2(B, D) * 180 / Math.PI;
         driveSubsystem.angle[2] = MathUtils.atan2(A, D) * 180 / Math.PI;
@@ -114,9 +113,9 @@ public class DriverCommand extends CommandBase {
         }
         adjustSpeedAndAngle();
 
-      
+
         //set motors speed for each wheel...
-        driveSubsystem.setWheel();
+        driveSubsystem.setWheel(oi.getJoystick1().getTwist());
 
     }
     //reverse speed rather than turn >180
@@ -124,15 +123,23 @@ public class DriverCommand extends CommandBase {
 
     protected void adjustSpeedAndAngle() {
         for (int i = 0; i <= 3; i++) {
-            driveSubsystem.magnitude[i] = driveSubsystem.magnitude[i] * MathUtils.pow(-1, (int) (driveSubsystem.angle[i] / 180.0));
-            driveSubsystem.angle[i] = (driveSubsystem.angle[i] % 180.0);
-            if (Math.abs(driveSubsystem.angle[i] + driveSubsystem.getLastAngle(i)) > 180) {
-                driveSubsystem.angle[i] = driveSubsystem.angle[i] - 180.0;
+            /* driveSubsystem.magnitude[i] = driveSubsystem.magnitude[i] * MathUtils.pow(-1, (int) (driveSubsystem.angle[i] / 180.0));
+            driveSubsystem.angle[i] = (driveSubsystem.angle[i] % 180.0);*/
+            //normalize the angle...from 0 to 360 clockwise
+            for (int f = 0; f < 4; f++) {
+                if (driveSubsystem.angle[f] < 0) {
+                    driveSubsystem.angle[f] = driveSubsystem.angle[f] + 360;
+                }
+            }
+            if (driveSubsystem.angle[i] > 180 && driveSubsystem.angle[i] < 360) {
+                driveSubsystem.angle[i] -= 180;
                 driveSubsystem.magnitude[i] *= -1;
             }
+            /* else if (driveSubsystem.angle[i] > 180) {
+            driveSubsystem.angle[i] = driveSubsystem.angle[i] - 180.0;
+            driveSubsystem.magnitude[i] *= -1;
+            }*/
         }
 
     }
-
-  
 }

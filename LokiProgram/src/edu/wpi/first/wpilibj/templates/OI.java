@@ -46,10 +46,13 @@ public class OI {
     public static final int JOYSTICK_PORT1 = 1;
     public static final int JOYSTICK_PORT2 = 2;
     public static final int JOYSTICK_PORT3 = 3;
+    public static final int upLeverPort = 6;
+    public static final int downLeverPort = 7;
     
     private Joystick stick1;//drive joystick
-    private Joystick stick2;//lever joystick
-    private Joystick stick3;//mass joystick
+    private Joystick stick2;//mass joystick
+    private Joystick stick3;//lever joystick
+    
     private JoystickButton upLever;
     private JoystickButton downLever;
             
@@ -58,7 +61,7 @@ public class OI {
         stick1 = new Joystick (JOYSTICK_PORT1);
         stick2 = new Joystick (JOYSTICK_PORT2);
         stick3 = new Joystick (JOYSTICK_PORT3);
-}
+    }   
     public Joystick getJoystick1() {
         return stick1;
     }
@@ -66,9 +69,9 @@ public class OI {
     public Joystick getJoystick2() {
         return stick2;
     }
-    public Joystick getJoystick3() {
-        return stick3;
-    }
+   public Joystick getJoystick3() {
+       return stick3;
+   }
     
     public JoystickButton getUpLever() {
         return upLever;

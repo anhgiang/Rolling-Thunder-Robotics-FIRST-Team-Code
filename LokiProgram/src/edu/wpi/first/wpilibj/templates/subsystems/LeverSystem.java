@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkListener;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.templates.RobotMap;
 
 /**
  *
@@ -15,13 +16,15 @@ public class LeverSystem extends Subsystem {
     // here. Call these from Commands.
 
     public Victor leverVictor;
-    public Button down;
-    public Button up;
     private NetworkTable table;
 
     public LeverSystem() {
-        //leverVictor = new Victor(RobotMap.leverVictor);
+        leverVictor = new Victor(RobotMap.leverSlot); 
     }
+    public void moveLever(double speed){
+        leverVictor.set(1);//-1*speed);
+    }
+          
 
 
     /*    public NetworkTable getTable() {

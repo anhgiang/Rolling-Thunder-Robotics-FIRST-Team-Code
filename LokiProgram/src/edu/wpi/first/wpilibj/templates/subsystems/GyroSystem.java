@@ -11,16 +11,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableGyro;
 public class GyroSystem extends Subsystem {
 
     double gyroAngle = 0.0;
-    public SendableGyro sendableGyro;
+    public SendableGyro driveGyro;
     private NetworkTable table;
-
-    public double getAngle() {
-        return gyroAngle;
+public  GyroSystem(){
+    //driveGyro=new SendableGyro(7);
+}
+    public double getDriveAngle() {
+        return gyroAngle;//driveGyro.getAngle();
     }
 
-    public void updateAngle(double angle) {
-        gyroAngle += angle; // NOTE - Why not use reset?
-    }
 
     public NetworkTable getTable() {
         if (table == null) {

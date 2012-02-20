@@ -49,7 +49,7 @@ public abstract class CommandBase extends Command {
                     SmartDashboard.putData(leverSubsystem);
                     SmartDashboard.putData(gyroSubsystem);
                     SmartDashboard.putData(driveSubsystem);
-                    SmartDashboard.putDouble("Battery Voltage", driverStation.getBatteryVoltage());
+                    
                 }
             }
         }.start();

@@ -2,6 +2,8 @@ package edu.wpi.first.wpilibj.templates.subsystems;
 
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.templates.RobotMap;
 
 /**
  *
@@ -10,10 +12,15 @@ public class MassSystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    public Jaguar massJaguar;
+    public Victor massVictor;
 
     public MassSystem() {
-        //massJaguar = new Jaguar(1);
+        massVictor = new Victor(RobotMap.massSlot);
+    }
+    
+    public void moveMass(double speed) {
+        massVictor.set(1);//-1 * speed);
+     
     }
 
     public void initDefaultCommand() {

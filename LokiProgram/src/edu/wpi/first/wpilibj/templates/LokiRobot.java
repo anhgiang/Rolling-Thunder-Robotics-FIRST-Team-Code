@@ -4,7 +4,6 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
 package edu.wpi.first.wpilibj.templates;
 
 import edu.wpi.first.wpilibj.Watchdog;
@@ -14,7 +13,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 import edu.wpi.first.wpilibj.templates.commands.DriverCommand;
 import edu.wpi.first.wpilibj.templates.commands.MainAutoCommand;
-
+import edu.wpi.first.wpilibj.templates.commands.MoveLever;
+import edu.wpi.first.wpilibj.templates.commands.MoveMass;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,6 +27,8 @@ public class LokiRobot extends IterativeRobot {
 
     Command autonomousCommand;
     DriverCommand driveCommand;
+    MoveMass moveMassCommand;
+    MoveLever moveLeverCommand;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -35,9 +37,11 @@ public class LokiRobot extends IterativeRobot {
     public void robotInit() {
         // instantiate the command used for the autonomous period
         autonomousCommand = new MainAutoCommand();
-        driveCommand  = new DriverCommand();
+        driveCommand = new DriverCommand();
+        moveMassCommand=new MoveMass();
+        moveLeverCommand=new MoveLever();
         // Initialize all subsystems
-        CommandBase.init(); 
+        CommandBase.init();
     }
 
     public void autonomousInit() {
@@ -50,15 +54,18 @@ public class LokiRobot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        Watchdog.getInstance().feed();
     }
 
     public void teleopInit() {
-	// This makes sure that the autonomous stops running when
+        // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
         autonomousCommand.cancel();
         driveCommand.start();
+        moveMassCommand.start();
+        moveLeverCommand.start();
     }
 
     /**

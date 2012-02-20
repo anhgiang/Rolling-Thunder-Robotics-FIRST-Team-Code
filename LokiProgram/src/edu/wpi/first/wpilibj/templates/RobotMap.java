@@ -36,5 +36,8 @@ public class RobotMap {
     public static final int flPot=2;
     public static final int blPot=3;
     public static final int brPot=4;
-    public static final Joystick stick1 = new Joystick(1);//joy stick for drivetrain
+    
+    public static final int leverSlot = 10;
+    public static final int massSlot = 6;
+   // public static final Joystick stick1 = new Joystick(1);//joy stick for drivetrain
 }
