@@ -5,40 +5,32 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableGyro;
 
 /**
- *
+ * TODO: Flesh out system, add info get and set functions
+ * TODO Investigate updateAngle
  */
 public class GyroSystem extends Subsystem {
 
     double gyroAngle = 0.0;
-    public SendableGyro SendableGyro;
-    //public SendableGyro ySendableGyro;
-
-    public GyroSystem() {
-        //SendableGyro = new SendableGyro(1);
-        // ySendableGyro = new SendableGyro(1);
-    }
-
-    public double getAngle() {
-        return gyroAngle;
-    }
-
-    public void updateAngle(double angle) {
-        gyroAngle += angle;
-    }
-    /*
+   
     private NetworkTable table;
+public  GyroSystem(){
+    //driveGyro=new SendableGyro(7);
+}
+    public double getDriveAngle() {
+        return gyroAngle;//driveGyro.getAngle();
+    }
+
 
     public NetworkTable getTable() {
         if (table == null) {
-            table = super.getTable();
-            table.putSubTable("xGyro", xSendableGyro.getTable());
-            table.putSubTable("yGyro", ySendableGyro.getTable());
+        table = super.getTable();
         }
+        //table.putSubTable("Gyro", sendableGyro.getTable());*/
         return table;
     }
 
     ;
-    */
+    
     public void initDefaultCommand() {
         // Set the default command for a subsystem here. This should probably be something that sends the gyro values to the dashboard
         //setDefaultCommand(new MySpecialCommand());

@@ -1,26 +1,35 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package edu.wpi.first.wpilibj.templates.commands;
 
 /**
  *
- * @author bradmiller
+ * @author Robert Truing
  */
-public class MainAutoCommand extends CommandBase {
-
-    public MainAutoCommand() {
+public class MoveMass extends CommandBase {
+    
+    public MoveMass() {
+        
+        requires(massSubsystem);
     }
-
     // Called just before this Command runs the first time
     protected void initialize() {
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        
+            massSubsystem.moveMass(oi.getJoystick2().getY()); 
+        
     }
 
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
+    protected boolean isFinished() {      
         return false;
     }
+    
 
     // Called once after isFinished returns true
     protected void end() {
